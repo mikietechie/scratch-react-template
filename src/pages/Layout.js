@@ -1,6 +1,10 @@
 import { Outlet, Link } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
+import { useContext } from "react";
 
-export default function Layout({authCtx}) {
+export default function Layout() {
+  const { user } = useContext(AuthContext)
+
   return (
     <div>
       <header className="p-3 bg-dark text-white">
@@ -13,12 +17,17 @@ export default function Layout({authCtx}) {
             <li className="nav-item">
               <Link to="/contact" className="nav-link mx-1">Contact</Link>
             </li>
-            <li className="nav-item">
-              <Link to="/admin" className="nav-link mx-1">Admin</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/login" className="nav-link mx-1">Login</Link>
-            </li>
+            {
+              user ? (
+              <li className="nav-item">
+                <Link to="/admin" className="nav-link mx-1">Admin</Link>
+              </li>
+              ) : (
+              <li className="nav-item">
+                <Link to="/login" className="nav-link mx-1">Login</Link>
+              </li>
+              )
+            }
           </ul>
         </nav>
       </header>
