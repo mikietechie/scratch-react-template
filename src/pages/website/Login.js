@@ -1,22 +1,28 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-    const [email, setEmail] = useState('')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(null);
+    const { setUser } = useContext(AuthContext)
+    const navigate = useNavigate()
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
         setError(null)
-        if (email === '' || password === '') {
-            setError('Email and password required')
+        if (username === '' || password === '') {
+            setError('Username and password required')
             return
         }
         if (password.length < 6) {
             setError('Password must be at least 6 characters')
             return
         }
-        alert('login successful')
+        setUser({username, password})
+        navigate('/admin')
     }
 
     return (
@@ -28,8 +34,8 @@ export default function Login() {
                 <div className="col-md-6 mx-auto">
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
-                            <label htmlFor="email" className="form-label">Email address</label>
-                            <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <label htmlFor="username" className="form-label">Username</label>
+                            <input type="text" className="form-control" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Password</label>
