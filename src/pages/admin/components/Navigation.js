@@ -1,13 +1,15 @@
-import { React, useState } from 'react';
+import { React, useContext, useState } from 'react';
 import useBreakpoint from '../../../hooks/user-breakpoint';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 export default function Navigation({ children }) {
+    const { user } = useContext(AuthContext)
     const [sidenavOpen, setSidenavOpen] = useState(true)
     const size = useBreakpoint()
     const isMobile = (["xs", "sm", "md"]).includes(size)
     const mainClass = (sidenavOpen && !isMobile ? "col-lg-9 col-md-8 col-sm-12" : "col-12") + " py-3 main"
-    const sidebarClass = " col-lg-3 col-md-4 col-sm-10 bg-white sidebar py-3 " + (sidenavOpen ? "" : "d-none") + (isMobile ? " mobile-sidebar " : "")
+    const sidebarClass = " col-lg-3 col-md-4 col-sm-10 sidebar py-3 " + (sidenavOpen ? "" : "d-none") + (isMobile ? " mobile-sidebar " : "")
 
     return (
         <div className="apc admin-container-holder container-fluid .bg-f1f5f9">
@@ -78,14 +80,27 @@ export default function Navigation({ children }) {
                 <main className={mainClass}>
                     <div className="mx-1">
                         <div className="row bg-white mb-5 box-bd ">
-                        <nav className="col-12 p-3">
-                            <div className="row">
-                            <div className="col-12">
-                                <button className="btn btn-primary px-3 menu-btn" onClick={() => setSidenavOpen(!sidenavOpen)}><i className="fa fa-bars"></i>&nbsp;Menu</button>&nbsp;Navbar
-                            </div>
-                            </div>
-                        </nav>
+                            <nav className="col-12 p-3">
+                                <div className="row">
+                                <div className="col-12">
+                                    <div className="d-flex justify-content-between">
+                                        <span>
+                                            <button className="btn btn-primary px-3 menu-btn" onClick={() => setSidenavOpen(!sidenavOpen)}><i className="fa fa-bars"></i>&nbsp;Menu</button>
+                                            &nbsp;Aone
+                                        </span>
+                                        <span>
+                                            <div className='btn-group'>
+                                                <button className="btn rounded px-3"><i className="fa fa-bell"></i></button>
+                                                <Link to="/logout" className="btn rounded px-3"><i className="fa fa-sign-out"></i></Link>
+                                                <button className="btn rounded px-3"><i className="fa fa-user"></i>&nbsp;{user.username}</button>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                                </div>
+                            </nav>
                         </div>
+                        <hr />
                         <div className="row">
                         {children}
                         </div>

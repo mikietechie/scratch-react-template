@@ -21,7 +21,9 @@ export default function Login() {
             setError('Password must be at least 6 characters')
             return
         }
-        setUser({username, password})
+        const user = {username, password}
+        localStorage.setItem('user', JSON.stringify(user))
+        setUser(user)
         navigate('/admin')
     }
 

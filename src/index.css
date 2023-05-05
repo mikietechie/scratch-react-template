@@ -31,7 +31,9 @@ code {
   border-radius: 5px;
 }
 .apc .sidebar {
+  background-color: #fff;
   height: 100vh;
+  transition: display 10s ease-in-out;
 }
 .apc .overlay {
   position: fixed;
@@ -104,6 +106,7 @@ code {
 
 .apc .sidebar .sidebar-inner .list-group .list-group-item>.list-group {
   display: none;
+  transition: display 10s ease-in-out;
 }
 
 .apc .sidebar .sidebar-inner .list-group .list-group-item:hover>.list-group {
